@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import {db} from '../db/db';
-import {SETTING, HTTP_STATUSES} from '../setting';
+import {HTTP_STATUSES} from '../setting';
 
 export const getIdVideoController = (req: Request, res: Response) =>{
     //const videos = db.videos;

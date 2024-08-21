@@ -18,10 +18,7 @@ export const HTTP_STATUSES = {
     NOT_FOUND_404:      404 
 };
 
-export interface Errors {
-    message: string,
-    field: string
-};
+export const RESOLUTIONS = [ 'P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P2160' ];
 
 export const foundError ={
     title:{
@@ -33,20 +30,19 @@ export const foundError ={
         field: "author"
     },
     resolutions: {
-        message: "Resolutions type isn't allowed",
+        message: `Resolutions must be from ${RESOLUTIONS}`,
         field:  "availableResolutions"
+    },
+    canBeDownloaded: {
+        message: "canBeDownloaded isn't boolean",
+        field:  "canBeDownloaded"
+    },
+    minAgeRestriction: {
+        message: "AgeRestriction must be from 1 to 18 or nulld",
+        field:  "minAgeRestriction"
+    },
+    publicationDate: {
+        message: "Not correct date of publication",
+        field:  "publicationDate"
     }
 };
-
-export const RESOLUTIONS = [ 'P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P2160' ];
-
-export interface Video {
-    id: number,
-    title:	string,
-    author:	string,
-    availableResolutions: string[],
-    canBeDownloaded:	boolean,
-    minAgeRestriction: number | null,
-    publicationDate: string
-    createdAt:	string
-}
