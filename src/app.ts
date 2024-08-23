@@ -1,5 +1,6 @@
 import express from 'express';
 import {SETTING, HTTP_STATUSES} from './setting';
+import cors from 'cors'
 import * as Handler from './handlerEndpoints/indexHandlers';
 
 
