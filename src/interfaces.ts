@@ -1,31 +1,39 @@
-export interface Errors {
+
+
+type Error = {
     message: string,
     field: string
-};
+}
 
-export interface Video {
+export type Errors = {
+    errorMessages: Array<Error>
+}
+
+export type Video = {
     id: number,
     title:	string,
     author:	string,
-    availableResolutions: string[],
+    availableResolutions: Array<string>, 
     canBeDownloaded:	boolean,
-    minAgeRestriction: number | null,
+    minAgeRestriction: null | number,
     publicationDate: string
     createdAt:	string
 }
 
-export interface CreateVideo {
+export type CreateVideo = {
     title:	string,
     author:	string,
-    availableResolutions: string[],
+    availableResolutions: Array<string>, 
 }
 
-export interface CorrectVideo {
+
+export type CorrectVideo = {
     title:	string,
     author:	string,
-    availableResolutions: string[],
+    availableResolutions: Array<string>, 
     canBeDownloaded:	boolean,
-    minAgeRestriction: number | null,
+    minAgeRestriction: null | number,
     publicationDate: string
 }
+
 

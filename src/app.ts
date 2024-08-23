@@ -29,35 +29,3 @@ app.delete(SETTING.PATH.TEST_CLEAR_DB, Handler.deleteAllController);
 
 
 
-// app.delete('/courses/:id', (req,res) => { //   courses/:id [DELETE]
-//     const foundCourse = db.courses.find(c => c.id === +req.params.id);
-//     db.courses = db.courses.filter(c => c.id !== +req.params.id);
-    
-//     if(!foundCourse) {
-//         res.sendStatus(HTTP_STATUSES.NOT_FOUND_404);
-//         return;
-//     }
-//     res.sendStatus(HTTP_STATUSES.NO_CONTENT_204);
-// })
-
-// app.put('/courses/:id', (req,res) => { //   courses/:id [PUT]
-//     const foundCourse = db.courses.find(c => c.id === +req.params.id)
-    
-//     if(!foundCourse) {
-//         res.sendStatus(HTTP_STATUSES.NOT_FOUND_404);
-//         return;
-//     }
-//     if(!req.body.title){
-//         res.sendStatus(HTTP_STATUSES.NOT_FOUND_404);
-//         return;
-//     }
-
-//     foundCourse.title = req.body.title;
-
-//     res.status(HTTP_STATUSES.NO_CONTENT_204);
-// })
-
-// app.delete('/__test__/data', (req, res) =>{
-//     db.courses = [];
-//     res.sendStatus(HTTP_STATUSES.NO_CONTENT_204);
-// })
