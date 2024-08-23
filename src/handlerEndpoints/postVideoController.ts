@@ -1,15 +1,16 @@
 import { Request, Response } from "express";
 import {db} from '../db/db';
 import * as SETTING from '../setting';
-import * as INTERFACES from '../interfaces';
+import {Video, CreateVideo, Errors } from '../interfaces';
+import { isArray } from "util";
 
 
 
-export const postVideoController = (req: Request, res: Response) =>{
+export const postVideoController = (req: Request<{},{},CreateVideo>, res: Response<Video|Errors>) =>{
     
-  let errors = findErrorValidData(req.body);
+  let errors: Errors = findErrorValidData(req.body);
 
-    if(errors.errorsMessages.length == 0){
+    if(errors.errorMessages.length == 0){
 
         let today = new Date();
         let tomorrow = new Date(); 
@@ -17,7 +18,7 @@ export const postVideoController = (req: Request, res: Response) =>{
 
         const id = today.getHours() * 1000000000 + today.getMinutes() * 1000000 + today.getSeconds() * 1000 + today.getMilliseconds();
       
-        const newVideo: INTERFACES.Video = {
+        const newVideo: Video = {
           id: id,
           title:	req.body.title,
           author:	req.body.author,
@@ -42,19 +43,18 @@ export const postVideoController = (req: Request, res: Response) =>{
     return;
 }
       
-    function findErrorValidData(body: INTERFACES.CreateVideo){
+    function findErrorValidData(body: CreateVideo){
      
-      const errors :{errorsMessages: INTERFACES.Errors[] } 
-          = {errorsMessages: []};
+      const errors :Errors  = {errorMessages: []};
 
           if(typeof(body.title) != "string" || body.title.length == 0 || body.title.length > 40)
-            errors.errorsMessages.push(SETTING.foundError.title);
+            errors.errorMessages.push(SETTING.foundError.title);
             
         if(typeof(body.author) != "string" || body.author.length == 0 || body.author.length > 40)
-            errors.errorsMessages.push(SETTING.foundError.author);
+            errors.errorMessages.push(SETTING.foundError.author);
 
-        if(!body.availableResolutions.every(n => SETTING.RESOLUTIONS.includes(n)) || body.availableResolutions.length == 0)
-            errors.errorsMessages.push(SETTING.foundError.resolutions);
+        if(Array.isArray(body.availableResolutions) && !body.availableResolutions.every(n => SETTING.RESOLUTIONS.includes(n)) || body.availableResolutions.length == 0)
+            errors.errorMessages.push(SETTING.foundError.resolutions);
         
         return errors;
     }

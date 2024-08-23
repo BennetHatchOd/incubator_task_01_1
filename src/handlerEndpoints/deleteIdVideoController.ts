@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import {db} from '../db/db';
 import {HTTP_STATUSES} from '../setting';
 
-export const deleteIdVideoController = (req: Request, res: Response) =>{
+export const deleteIdVideoController = (req: Request<{id: string}>, res: Response) =>{
     
     const index = db.videos.findIndex(n => n.id === +req.params.id);
   

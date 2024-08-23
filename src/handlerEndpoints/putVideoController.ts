@@ -1,19 +1,19 @@
 import { Request, Response } from "express";
 import {db} from '../db/db';
 import * as SETTING from '../setting';
-import * as INTERFACES from '../interfaces';
+import {Video, CorrectVideo, Errors } from '../interfaces';
 
-export const putVideoController = (req: Request, res: Response) =>{
+export const putVideoController = (req: Request<{id: string},{},CorrectVideo>, res: Response<Errors>) =>{
     
-  const foundVideo = db.videos.find(c => c.id === +req.params.id);
+  const foundVideo: Video = db.videos.find(c => c.id === +req.params.id);
     if(!foundVideo) {
       res.sendStatus(SETTING.HTTP_STATUSES.NOT_FOUND_404);
       return;
     }
     
-  let errors = findErrorValidData(req.body);
+  let errors: Errors = findErrorValidData(req.body);
 
-  if(errors.errorsMessages.length == 0){
+  if(errors.errorMessages.length == 0){
 
      
      
@@ -37,32 +37,29 @@ export const putVideoController = (req: Request, res: Response) =>{
 }
       
 
-    function findErrorValidData(body: INTERFACES.CorrectVideo){
+    function findErrorValidData(body: CorrectVideo){
 
-        const errors :{
-                errorsMessages: INTERFACES.Errors[] 
-            } = {errorsMessages: []};
+        const errors :Errors = {errorMessages: []};
 
         if(typeof(body.title) != "string" || body.title.length == 0 || body.title.length > 40)
-            errors.errorsMessages.push(SETTING.foundError.title);
+            errors.errorMessages.push(SETTING.foundError.title);
             
         if(typeof(body.author) != "string" || body.author.length == 0 || body.author.length > 40)
-            errors.errorsMessages.push(SETTING.foundError.author);
+            errors.errorMessages.push(SETTING.foundError.author);
 
-        if(!body.availableResolutions.every(n => SETTING.RESOLUTIONS.includes(n)) || body.availableResolutions.length == 0){
-            errors.errorsMessages.push(SETTING.foundError.resolutions);
+        if(Array.isArray(body.availableResolutions) && !body.availableResolutions.every(n => SETTING.RESOLUTIONS.includes(n)) || body.availableResolutions.length == 0){
+            errors.errorMessages.push(SETTING.foundError.resolutions);
         } 
         if(typeof(body.canBeDownloaded) != "boolean")
-            errors.errorsMessages.push(SETTING.foundError.canBeDownloaded);
+            errors.errorMessages.push(SETTING.foundError.canBeDownloaded);
 
 
-        if (body.minAgeRestriction != null)
-            if(body.minAgeRestriction > 18 || body.minAgeRestriction < 1)
-                errors.errorsMessages.push(SETTING.foundError.minAgeRestriction);
+        if (body.minAgeRestriction != null && (typeof(+body.minAgeRestriction) != "number" || +body.minAgeRestriction > 18 || +body.minAgeRestriction < 1))
+          errors.errorMessages.push(SETTING.foundError.minAgeRestriction);
         
         
         if(typeof(body.publicationDate) != "string" || isNaN(Date.parse(body.publicationDate)))
-            errors.errorsMessages.push(SETTING.foundError.publicationDate);
+            errors.errorMessages.push(SETTING.foundError.publicationDate);
 
         return errors;
     }
