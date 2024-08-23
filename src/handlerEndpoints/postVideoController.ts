@@ -38,7 +38,7 @@ export const postVideoController = (req: Request<{},{},CreateVideo>, res: Respon
 
     res
       .status(SETTING.HTTP_STATUSES.BAD_REQUEST_400)
-      .json(errors);
+      .send(errors);
       
     return;
 }

@@ -7,7 +7,7 @@ import * as Handler from './handlerEndpoints/indexHandlers';
 
 
 export const app = express();
-//app.use(express.json());
+
 
 const jsonBodyMiddleware = express.json();
 app.use(jsonBodyMiddleware);

@@ -31,7 +31,7 @@ export const putVideoController = (req: Request<{id: string},{},CorrectVideo>, r
 
   res
     .status(SETTING.HTTP_STATUSES.BAD_REQUEST_400)
-    .json(errors);
+    .send(errors);
       
     return;
 }
