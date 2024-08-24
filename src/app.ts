@@ -15,7 +15,7 @@ app.use(jsonBodyMiddleware);
 
 app.get('/', (req,res) => {   
     
-    res.status(200).json({version: '3.0 '});
+    res.status(200).json({version: '4.0 '});
     
 })
 

@@ -87,7 +87,23 @@ describe('/video', () => {
                     "availableResolutions": ["P144", "P480", "P720"]
                 })
                 .expect(HTTP_STATUSES.BAD_REQUEST_400,
-                    {errorMessages:[{
+                    {errorsMessages:[{
+                        message: "Author length isn't allowed",
+                        field: "author"
+                        }]
+                    });
+                
+    })
+    it('should return 400 ', async () => { // create new item [post/video]
+        await 
+                request(app)
+                .post('/videos')
+                .send({
+                    author: "Tarantino9",
+                    "availableResolutions": ["P144", "P480", "P720"]
+                })
+                .expect(HTTP_STATUSES.BAD_REQUEST_400,
+                    {errorsMessages:[{
                         message: "Author length isn't allowed",
                         field: "author"
                         }]

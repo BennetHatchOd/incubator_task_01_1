@@ -6,7 +6,7 @@ type Error = {
 }
 
 export type Errors = {
-    errorMessages: Array<Error>
+    errorsMessages: Array<Error>
 }
 
 export type Video = {

@@ -13,7 +13,7 @@ export const putVideoController = (req: Request<{id: string},{},CorrectVideo>, r
     
   let errors: Errors = findErrorValidData(req.body);
 
-  if(errors.errorMessages.length == 0){
+  if(errors.errorsMessages.length == 0){
 
      
      
@@ -39,27 +39,27 @@ export const putVideoController = (req: Request<{id: string},{},CorrectVideo>, r
 
     function findErrorValidData(body: CorrectVideo){
 
-        const errors :Errors = {errorMessages: []};
+        const errors :Errors = {errorsMessages: []};
 
         if(typeof(body.title) != "string" || body.title.length == 0 || body.title.length > 40)
-            errors.errorMessages.push(SETTING.foundError.title);
+            errors.errorsMessages.push(SETTING.foundError.title);
             
         if(typeof(body.author) != "string" || body.author.length == 0 || body.author.length > 40)
-            errors.errorMessages.push(SETTING.foundError.author);
+            errors.errorsMessages.push(SETTING.foundError.author);
 
         if(Array.isArray(body.availableResolutions) && !body.availableResolutions.every(n => SETTING.RESOLUTIONS.includes(n)) || body.availableResolutions.length == 0){
-            errors.errorMessages.push(SETTING.foundError.resolutions);
+            errors.errorsMessages.push(SETTING.foundError.resolutions);
         } 
         if(typeof(body.canBeDownloaded) != "boolean")
-            errors.errorMessages.push(SETTING.foundError.canBeDownloaded);
+            errors.errorsMessages.push(SETTING.foundError.canBeDownloaded);
 
 
         if (body.minAgeRestriction != null && (typeof(+body.minAgeRestriction) != "number" || +body.minAgeRestriction > 18 || +body.minAgeRestriction < 1))
-          errors.errorMessages.push(SETTING.foundError.minAgeRestriction);
+          errors.errorsMessages.push(SETTING.foundError.minAgeRestriction);
         
         
         if(typeof(body.publicationDate) != "string" || isNaN(Date.parse(body.publicationDate)))
-            errors.errorMessages.push(SETTING.foundError.publicationDate);
+            errors.errorsMessages.push(SETTING.foundError.publicationDate);
 
         return errors;
     }

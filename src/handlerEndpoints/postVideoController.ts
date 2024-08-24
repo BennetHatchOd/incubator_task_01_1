@@ -10,7 +10,7 @@ export const postVideoController = (req: Request<{},{},CreateVideo>, res: Respon
     
   let errors: Errors = findErrorValidData(req.body);
 
-    if(errors.errorMessages.length == 0){
+    if(errors.errorsMessages.length == 0){
 
         let today = new Date();
         let tomorrow = new Date(); 
@@ -35,26 +35,26 @@ export const postVideoController = (req: Request<{},{},CreateVideo>, res: Respon
           .json(newVideo);
         return;
     }
-
+console.log(errors);
     res
       .status(SETTING.HTTP_STATUSES.BAD_REQUEST_400)
-      .send(errors);
+      .json(errors);
       
     return;
 }
       
     function findErrorValidData(body: CreateVideo){
      
-      const errors :Errors  = {errorMessages: []};
+      const errors :Errors  = {errorsMessages: []};
 
           if(typeof(body.title) != "string" || body.title.length == 0 || body.title.length > 40)
-            errors.errorMessages.push(SETTING.foundError.title);
+            errors.errorsMessages.push(SETTING.foundError.title);
             
         if(typeof(body.author) != "string" || body.author.length == 0 || body.author.length > 40)
-            errors.errorMessages.push(SETTING.foundError.author);
+            errors.errorsMessages.push(SETTING.foundError.author);
 
         if(Array.isArray(body.availableResolutions) && !body.availableResolutions.every(n => SETTING.RESOLUTIONS.includes(n)) || body.availableResolutions.length == 0)
-            errors.errorMessages.push(SETTING.foundError.resolutions);
+            errors.errorsMessages.push(SETTING.foundError.resolutions);
         
         return errors;
     }
