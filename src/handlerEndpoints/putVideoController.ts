@@ -44,7 +44,7 @@ export const putVideoController = (req: Request<{id: string},{},CorrectVideo>, r
         if(typeof(body.title) != "string" || body.title.length == 0 || body.title.length > 40)
             errors.errorsMessages.push(SETTING.foundError.title);
             
-        if(typeof(body.author) != "string" || body.author.length == 0 || body.author.length > 40)
+        if(typeof(body.author) != "string" || body.author.length == 0 || body.author.length > 20)
             errors.errorsMessages.push(SETTING.foundError.author);
 
         if(Array.isArray(body.availableResolutions) && !body.availableResolutions.every(n => SETTING.RESOLUTIONS.includes(n)) || body.availableResolutions.length == 0){
